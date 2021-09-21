@@ -1,32 +1,52 @@
 <template>
-  <div class="w-full h-screen font-sans bg-cover bg-riven">
-    <div
-      class="container flex items-center justify-center flex-1 h-full mx-auto"
-    >
-      <div class="w-full max-w-lg">
-        <div class="leading-loose">
-          <form
+  <AppLayouts>
+    <template v-slot:Content>
+      <form class="flex w-full m-auto max-w-4xl space-x-5">
+        <div
+          class="
+            w-full
+            max-w-4xl
+            px-5
+            py-10
+            m-auto
+            mt-10
+            bg-white
+            backdrop-filter
+            rounded-lg
+            shadow
+            dark:bg-gray-800
+          "
+        >
+          <div
             class="
-              max-w-sm
-              p-10
-              m-auto
-              bg-white bg-opacity-25
-              rounded
-              shadow-xl
+              mb-6
+              text-3xl
+              font-semibold
+              text-center text-gray-800
+              dark:text-white
             "
           >
-            <p class="mb-8 text-2xl font-light text-center text-white">Login</p>
-            <div class="mb-2">
+            New Schedule
+          </div>
+          <div
+            v-for="(schedule, key) in schedules"
+            :key="key"
+            class="grid max-w-4xl grid-cols-12 gap-4 m-auto"
+          >
+            <div class="col-span-5 lg:col-span-5">
               <div class="relative">
+                <label for="time" class="block font-semibold text-lg"
+                  >Time *</label
+                >
                 <input
-                  type="text"
-                  id="login-with-bg-email"
+                  type="time"
+                  id="time"
                   class="
                     rounded-lg
                     border-transparent
                     flex-1
                     appearance-none
-                    border border-gray-300
+                    border-1 border-gray-400
                     w-full
                     py-2
                     px-4
@@ -39,21 +59,24 @@
                     focus:ring-2 focus:ring-purple-600
                     focus:border-transparent
                   "
-                  placeholder="email"
+                  placeholder="Name"
                 />
               </div>
             </div>
-            <div class="mb-2">
+            <div class="col-span-5 lg:col-span-5">
               <div class="relative">
+                <label for="description" class="block text-lg font-semibold"
+                  >Description *</label
+                >
                 <input
                   type="text"
-                  id="login-with-bg-password"
+                  id="description"
                   class="
                     rounded-lg
                     border-transparent
                     flex-1
                     appearance-none
-                    border border-gray-300
+                    border border-gray-400
                     w-full
                     py-2
                     px-4
@@ -66,11 +89,50 @@
                     focus:ring-2 focus:ring-purple-600
                     focus:border-transparent
                   "
-                  placeholder="password"
+                  placeholder="description"
                 />
               </div>
             </div>
-            <div class="flex items-center justify-between mt-4">
+            <div class="col-span-2">
+              <svg
+                width="10"
+                height="10"
+                class="
+                  mt-9
+                  w-full
+                  h-6
+                  m-auto
+                  text-indigo-500
+                  hover:text-indigo-300
+                  cursor-pointer
+                "
+                fill="currentColor"
+                viewBox="0 0 1792 1792"
+                xmlns="http://www.w3.org/2000/svg"
+                @click="removeShedules(key)"
+              >
+                <path
+                  d="M704 1376v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm-544-992h448l-48-117q-7-9-17-11h-317q-10 2-17 11zm928 32v64q0 14-9 23t-23 9h-96v948q0 83-47 143.5t-113 60.5h-832q-66 0-113-58.5t-47-141.5v-952h-96q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h309l70-167q15-37 54-63t79-26h320q40 0 79 26t54 63l70 167h309q14 0 23 9t9 23z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <div class="grid max-w-4xl grid-cols-2 gap-4 m-auto">
+            <div class="col-span-2 lg:col-span-1">
+              <span
+                class="
+                  text-blue-500 text-lg
+                  font-extrabold
+                  rounded-full
+                  px-1
+                  cursor-pointer
+                  hover:text-red-700
+                "
+                @click="addSchedules"
+                >+</span
+              >
+            </div>
+            <div class="col-span-2 text-right">
               <button
                 type="submit"
                 class="
@@ -92,32 +154,35 @@
                   rounded-lg
                 "
               >
-                Validate
+                Save
               </button>
             </div>
-            <div class="text-center">
-              <a
-                class="
-                  right-0
-                  inline-block
-                  text-sm
-                  font-light
-                  align-baseline
-                  text-500
-                  hover:text-gray-800
-                "
-              >
-                Create an account
-              </a>
-            </div>
-          </form>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
+      </form>
+    </template>
+  </AppLayouts>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      schedules: [],
+      contador: 0,
+    };
+  },
+  methods: {
+    addSchedules() {
+      this.schedules.push(this.contador++);
+    },
+    removeShedules(key) {
+      this.schedules.splice(this.schedules.indexOf(key), 1);
+      console.log(this.schedules);
+    },
+  },
+};
+</script>
+
 <style>
-.bg-riven {
-  background-image: url("/images/landscape/riven.jpg") !important;
-}
 </style>

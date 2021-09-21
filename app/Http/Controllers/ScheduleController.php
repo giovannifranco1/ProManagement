@@ -8,6 +8,7 @@ class ScheduleController extends Controller
 {
   public function index()
   {
-    return Inertia::render();
+
+    return Inertia::render('Schedule/Index');
   }
 }

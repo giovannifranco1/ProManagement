@@ -1,98 +1,123 @@
 <template>
-    <Head title="Log in" />
-
-    <jet-authentication-card>
-        <template #logo>
-            <jet-authentication-card-logo />
-        </template>
-
-        <jet-validation-errors class="mb-4" />
-
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
+  <div class="w-full h-screen font-sans bg-cover bg-riven">
+    <div
+      class="container flex items-center justify-center flex-1 h-full mx-auto"
+    >
+      <div class="w-full max-w-lg">
+        <div class="leading-loose">
+          <form
+            class="
+              max-w-sm
+              p-10
+              m-auto
+              bg-white bg-opacity-25
+              rounded
+              shadow-xl
+            "
+          >
+            <p class="mb-8 text-2xl font-light text-center text-white">Login</p>
+            <div class="mb-2">
+              <div class="relative">
+                <input
+                  type="text"
+                  id="login-with-bg-email"
+                  class="
+                    rounded-lg
+                    border-transparent
+                    flex-1
+                    appearance-none
+                    border border-gray-300
+                    w-full
+                    py-2
+                    px-4
+                    bg-white
+                    text-gray-700
+                    placeholder-gray-400
+                    shadow-sm
+                    text-base
+                    focus:outline-none
+                    focus:ring-2 focus:ring-purple-600
+                    focus:border-transparent
+                  "
+                  placeholder="email"
+                />
+              </div>
+            </div>
+            <div class="mb-2">
+              <div class="relative">
+                <input
+                  type="text"
+                  id="login-with-bg-password"
+                  class="
+                    rounded-lg
+                    border-transparent
+                    flex-1
+                    appearance-none
+                    border border-gray-300
+                    w-full
+                    py-2
+                    px-4
+                    bg-white
+                    text-gray-700
+                    placeholder-gray-400
+                    shadow-sm
+                    text-base
+                    focus:outline-none
+                    focus:ring-2 focus:ring-purple-600
+                    focus:border-transparent
+                  "
+                  placeholder="password"
+                />
+              </div>
+            </div>
+            <div class="flex items-center justify-between mt-4">
+              <button
+                type="submit"
+                class="
+                  py-2
+                  px-4
+                  bg-indigo-600
+                  hover:bg-indigo-700
+                  focus:ring-indigo-500 focus:ring-offset-indigo-200
+                  text-white
+                  w-full
+                  transition
+                  ease-in
+                  duration-200
+                  text-center text-base
+                  font-semibold
+                  shadow-md
+                  focus:outline-none
+                  focus:ring-2 focus:ring-offset-2
+                  rounded-lg
+                "
+              >
+                Validate
+              </button>
+            </div>
+            <div class="text-center">
+              <a
+                class="
+                  right-0
+                  inline-block
+                  text-sm
+                  font-light
+                  align-baseline
+                  text-500
+                  hover:text-gray-800
+                "
+              >
+                Create an account
+              </a>
+            </div>
+          </form>
         </div>
-
-        <form @submit.prevent="submit">
-            <div>
-                <jet-label for="email" value="Email" />
-                <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus />
-            </div>
-
-            <div class="mt-4">
-                <jet-label for="password" value="Password" />
-                <jet-input id="password" type="password" class="mt-1 block w-full" v-model="form.password" required autocomplete="current-password" />
-            </div>
-
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <jet-checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ml-2 text-sm text-gray-600">Remember me</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900">
-                    Forgot your password?
-                </Link>
-
-                <jet-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
-                </jet-button>
-            </div>
-        </form>
-    </jet-authentication-card>
+      </div>
+    </div>
+  </div>
 </template>
-
-<script>
-    import { defineComponent } from 'vue'
-    import JetAuthenticationCard from '@/Jetstream/AuthenticationCard.vue'
-    import JetAuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
-    import JetButton from '@/Jetstream/Button.vue'
-    import JetInput from '@/Jetstream/Input.vue'
-    import JetCheckbox from '@/Jetstream/Checkbox.vue'
-    import JetLabel from '@/Jetstream/Label.vue'
-    import JetValidationErrors from '@/Jetstream/ValidationErrors.vue'
-    import { Head, Link } from '@inertiajs/inertia-vue3';
-
-    export default defineComponent({
-        components: {
-            Head,
-            JetAuthenticationCard,
-            JetAuthenticationCardLogo,
-            JetButton,
-            JetInput,
-            JetCheckbox,
-            JetLabel,
-            JetValidationErrors,
-            Link,
-        },
-
-        props: {
-            canResetPassword: Boolean,
-            status: String
-        },
-
-        data() {
-            return {
-                form: this.$inertia.form({
-                    email: '',
-                    password: '',
-                    remember: false
-                })
-            }
-        },
-
-        methods: {
-            submit() {
-                this.form
-                    .transform(data => ({
-                        ... data,
-                        remember: this.form.remember ? 'on' : ''
-                    }))
-                    .post(this.route('login'), {
-                        onFinish: () => this.form.reset('password'),
-                    })
-            }
-        }
-    })
-</script>
+<style>
+.bg-riven {
+  background-image: url("/images/landscape/riven.jpg") !important;
+}
+</style>

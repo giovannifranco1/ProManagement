@@ -1,11 +1,15 @@
 <template>
   <AppLayouts>
     <template v-slot:Content>
-      <form class="flex w-full m-auto max-w-4xl space-x-5">
+      <form
+        @submit.prevent="handlerForm"
+        class="flex w-full m-auto max-w-2xl lg:max-w-6xl space-x-5"
+      >
         <div
           class="
             w-full
-            max-w-4xl
+            max-w-2xl
+            lg:max-w-6xl
             px-5
             py-10
             m-auto
@@ -24,6 +28,7 @@
               font-semibold
               text-center text-gray-800
               dark:text-white
+              animate-bounce
             "
           >
             New Schedule
@@ -31,9 +36,9 @@
           <div
             v-for="(schedule, key) in schedules"
             :key="key"
-            class="grid max-w-4xl grid-cols-12 gap-4 m-auto"
+            class="grid max-w-5xl grid-cols-12 gap-4 m-auto"
           >
-            <div class="col-span-5 lg:col-span-5">
+            <div class="col-span-5 xl:col-span-5">
               <div class="relative">
                 <label for="time" class="block font-semibold text-lg"
                   >Time *</label
@@ -60,6 +65,7 @@
                     focus:border-transparent
                   "
                   placeholder="Name"
+                  v-model="schedule.time"
                 />
               </div>
             </div>
@@ -89,6 +95,7 @@
                     focus:ring-2 focus:ring-purple-600
                     focus:border-transparent
                   "
+                  v-model="schedule.description"
                   placeholder="description"
                 />
               </div>
@@ -168,17 +175,23 @@
 export default {
   data() {
     return {
-      schedules: [],
-      contador: 0,
+      schedules: [
+        {
+          time: null,
+          description: null,
+        },
+      ],
     };
   },
   methods: {
     addSchedules() {
-      this.schedules.push(this.contador++);
+      this.schedules.push({ time: null, description: null });
     },
     removeShedules(key) {
-      this.schedules.splice(this.schedules.indexOf(key), 1);
-      console.log(this.schedules);
+      this.schedules.splice(key, 1);
+    },
+    handlerForm() {
+      // this.$inertia.post(route())
     },
   },
 };

@@ -1,8 +1,6 @@
-
-
 <template>
   <AppLayouts>
-    <template v-slot:Content><h1 class="text-red-700">dsdss</h1></template>
+    <template v-slot:Content> </template>
   </AppLayouts>
 </template>
 

@@ -16,4 +16,5 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('/', [HomeController::class, 'index']);
-Route::get('/schedules', [ScheduleController::class, 'index']);
+Route::get('/schedules/create', [ScheduleController::class, 'create']);
+Route::get('/schedules/{schedule}', [ScheduleController::class, 'show']);
